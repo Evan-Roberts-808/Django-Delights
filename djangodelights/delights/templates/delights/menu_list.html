@@ -1,0 +1,8 @@
+{% extends 'delights/base.html' %} {% block content %}
+<h2>Menu</h2>
+<ul>
+  {% for item in menu %}
+  <li>{{ item.name }} - Price: {{ item.price }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

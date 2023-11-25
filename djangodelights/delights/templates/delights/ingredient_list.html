@@ -1,0 +1,23 @@
+{% extends 'delights/base.html' %} {% block content %}
+<h2>Inventory</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+      <th>Unit Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ingredient in ingredients %}
+    <tr>
+      <td>{{ ingredient.name }}</td>
+      <td>{{ ingredient.available_quantity }}</td>
+      <td>{{ ingredient.unit }}</td>
+      <td>${{ ingredient.price_per_unit }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
