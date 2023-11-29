@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from delights.views import IngredientListView, IngredientDeleteView, MenuListView, PurchaseListView, ProfitRevenueView, HomeView
+from delights.views import IngredientListView, IngredientDeleteView, MenuListView, PurchaseListView, ProfitRevenueView, HomeView, add_menu_item, add_ingredient, add_recipe_requirements
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -26,4 +26,7 @@ urlpatterns = [
     path('menu/', MenuListView.as_view(), name='menu-list'),
     path('purchases/', PurchaseListView.as_view(), name='purchase-list'),
     path('profit-revenue/', ProfitRevenueView.as_view(), name='profit-revenue'),
+    path('add-menu-item/', add_menu_item, name='add-menu-item'),
+    path('add-ingredient/', add_ingredient, name='add-ingredient'),
+    path('add-recipe-requirements/', add_recipe_requirements, name='add-recipe-requirements'),
 ]

@@ -1,10 +1,71 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DeleteView, TemplateView
 from django.db.models import Sum
-from .models import Ingredient, MenuItem, RecipeRequirements, Purchase
+from .models import MenuItem, RecipeRequirements, Ingredient, Purchase
+from .forms import MenuItemForm, IngredientForm, RecipeRequirementsForm, PurchaseForm, InventoryUpdateForm
 
+
+def add_menu_item(request):
+    if request.method == 'POST':
+        form = MenuItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('menu')
+    else:
+        form = MenuItemForm()
+
+    return render(request, 'delights/add_menu_item.html', {'form': form})
+
+def add_ingredient(request):
+    if request.method == 'POST':
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ingredient_list')
+    else:
+        form = IngredientForm()
+    
+    return render(request, 'delights/add_ingredient.html', {'form': form})
+
+def add_recipe_requirements(request):
+    if request.method == 'POST':
+        form = RecipeRequirementsForm(request.POST)
+        if form.is_valid():
+            recipe_requirements = form.save()
+            return redirect('menu')
+    else:
+        form = RecipeRequirementsForm()
+
+    return render(request, 'delights/add_recipe_requirements.html', {'form': form})
+
+def record_purchase(request):
+    if request.method == 'POST':
+        form = PurchaseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('purchase_list')
+    else:
+        form = PurchaseForm()
+
+    return render(request, 'delights/record_purchase.html', {'form': form})
+
+def update_inventory(request):
+    if request.method == 'POST':
+        form = InventoryUpdateForm(request.POST)
+        if form.is_valid():
+            ingredient = form.cleaned_data['ingredient']
+            quantity = form.cleaned_data['quantity']
+
+            ingredient.available_quantity += quantity
+            ingredient.save()
+
+            return redirect('ingredients_list')
+    else:
+        form = InventoryUpdateForm()
+
+    return render(request, 'delights/update_inventory.html', {'form': form})
 
 class HomeView(TemplateView):
     template_name = 'delights/home.html'

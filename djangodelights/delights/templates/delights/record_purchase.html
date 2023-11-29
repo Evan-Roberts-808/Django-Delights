@@ -1,0 +1,10 @@
+{% extends 'delights/base.html' %}
+
+{% block content %}
+  <h2>Record Purchase</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Record Purchase" />
+  </form>
+{% endblock %}
